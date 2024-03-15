@@ -2,6 +2,9 @@ const express = require("express");
 const mongoose = require("mongoose");
 require("dotenv").config();
 
+const User = require("./models/user")
+const Post = require("./models/post")
+
 const app = express();
 mongoose.connect(process.env.MONGODB_URL).catch((err) => console.error(err));
 
