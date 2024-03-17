@@ -4,4 +4,6 @@
     </div>
 <% } %>
 <h1><%= title %></h1>
-<% console.log(messages) %>
+<% if (typeof currentUser !== 'undefined') { %>
+    <a href="/users/<%= currentUser.id %>/posts/create">Create a new post</a>
+<% } %>

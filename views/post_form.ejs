@@ -1,0 +1,19 @@
+<%- include("./layout/header") %>
+<h1><%= title %></h1>
+<form action="" method="post">
+    <label for="title">Subject: 
+        <input type="text" name="title" value=<%= typeof post === 'undefined' ? "" : post.title %>>
+    </label>
+    <label for="body">Content: 
+        <input type="text" name="body" value=<%= typeof post === 'undefined' ? "" : post.body %>>
+    </label>
+    <button>Create post</button>
+</form>
+<% if (typeof errors !== 'undefined') { %>
+    <ul>
+      <% errors.forEach((error) => { %>
+        <li><%= error.msg %></li>
+      <% }) %>
+    </ul>
+    <% } %>
+<%- include("./layout/footer") %>
