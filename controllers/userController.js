@@ -1,5 +1,6 @@
 const asyncHandler = require("express-async-handler");
 const { validationResult, checkSchema } = require("express-validator");
+const passport = require("passport");
 const bcrypt = require("bcryptjs");
 const User = require("../models/user");
 require("dotenv").config();
@@ -83,6 +84,20 @@ exports.user_create_post = [
     res.redirect("/");
   }),
 ];
+
+exports.user_login_get = (req, res, next) => {
+  if (typeof res.locals.currentUser !== "undefined") {
+    res.redirect("/");
+  }
+  res.render("login", { title: "Log In", messages: req.flash() });
+};
+
+exports.user_login_post = passport.authenticate("local", {
+  successRedirect: "/",
+  failureRedirect: "/login",
+  successFlash: true,
+  failureFlash: true,
+});
 
 exports.member_create_get = (req, res, next) => {
   res.render("member", { title: "Join The Club" });

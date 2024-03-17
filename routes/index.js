@@ -3,12 +3,14 @@ const router = express.Router();
 const user_controller = require("../controllers/userController");
 
 router.get("/", (req, res, next) => {
-  res.send("homepage");
+  res.render("homepage", { title: "Homepage", messages: req.flash() });
 });
 router.get("/signup", (req, res, next) => {
   res.redirect("/users/create");
 });
-router.get("/login", (req, res, next) => {});
+router.get("/login", (req, res, next) => {
+  res.redirect("/users/login");
+});
 router.get("/member", (req, res, next) => {
   res.redirect("/users/member");
 });
