@@ -1,0 +1,21 @@
+<%- include("./layout/header") %>
+<% if (typeof currentUser === 'undefined') { %>
+  <p>You should log in first!</p>
+<% } else { %>
+  <h1><%= title %></h1>
+  <p>Please provide the secret code to become an admin!</p>
+  <form action="" method="post">
+    <label for="secret">Admin secret code: 
+      <input type="text" name="secret">
+    </label>
+    <button>Become Admin</button>
+  </form>
+  <% if (typeof errors !== 'undefined') { %>
+  <ul>
+    <% errors.forEach(error => { %>
+    <li><%= error.msg %></li>
+    <% }) %>
+  </ul>
+  <% } %>
+<% } %>
+<%- include("./layout/footer") %>

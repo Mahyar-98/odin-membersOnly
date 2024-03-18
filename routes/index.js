@@ -28,5 +28,8 @@ router.get("/logout", (req, res, next) => {
 router.get("/member", (req, res, next) => {
   res.redirect("/users/member");
 });
+router.get("/admin", (req, res, next) => {
+  res.redirect("/users/admin");
+});
 
 module.exports = router;

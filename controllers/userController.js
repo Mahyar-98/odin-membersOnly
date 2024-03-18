@@ -126,3 +126,19 @@ exports.member_create_post = asyncHandler(async (req, res, next) => {
     res.redirect("/");
   }
 });
+
+exports.admin_create_get = (req, res, next) => {
+  res.render("admin", { title: "Admin" });
+};
+
+exports.admin_create_post = asyncHandler(async (req, res, next) => {
+  const user = await User.findOne({ _id: res.locals.currentUser });
+  if (!user) {
+    res.redirect("/login");
+  }
+  if (req.body.secret === process.env.ADMIN_CODE) {
+    user.membership_status = "admin";
+    await user.save();
+    res.redirect("/");
+  }
+});
