@@ -34,7 +34,7 @@ exports.post_create_post = [userLoggedIn, checkSchema({
     post = new Post({
         title: req.body.title,
         body: req.body.body,
-        user: req.params.id,
+        user: res.locals.currentUser,
     })
     if (!errors.isEmpty()) {
         res.render("post_form", {
@@ -45,4 +45,4 @@ exports.post_create_post = [userLoggedIn, checkSchema({
     }
     await post.save();
     res.redirect("/")
-})]
+})];
