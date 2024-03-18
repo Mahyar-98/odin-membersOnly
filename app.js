@@ -72,6 +72,8 @@ app.use(flash());
 // Add currentUser to local variables available in views
 app.use((req, res, next) => {
   res.locals.currentUser = req.user;
+  res.locals.loggedIn = typeof req.user !== "undefined";
+  res.locals.isAdmin = req.user ? req.user.membership_status === "admin" : null;
   next();
 });
 

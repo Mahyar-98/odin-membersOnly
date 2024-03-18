@@ -7,11 +7,19 @@
 </head>
 <body>
   <header>
-  <% if (typeof currentUser !== 'undefined') { %>
-    <p>Welcome, <%= currentUser.first_name %>!</p>
-    <a href="/logout">Log out</a>
-  <% } else { %>
-    <a href="/login">Log in</a>
-  <% } %>
+    <nav>
+      <ul>
+        <a href="/">Home</a>
+        <a href="/about">About</a>
+      </ul>
+      <ul>
+        <% if (loggedIn) { %>
+          <a href="/logout">Log out</a>
+        <% } else { %>
+          <a href="/login">Log in</a>
+          <a href="/signup">Sign up</a>
+        <% } %>
+      </ul>
+    </nav>
   </header>
   <main>

@@ -1,26 +1,36 @@
+<%- include("./layout/header") %>
 <% if (messages.success) { %>
     <div class="alert alert-success" role="alert">
       <%= messages.success %>
     </div>
 <% } %>
 <h1><%= title %></h1>
-<% if (typeof currentUser !== 'undefined') { %>
+<% if (loggedIn) { %>
+    <p>Welcome, <%= currentUser.first_name %>!</p>
     <a href="/users/<%= currentUser.id %>/posts/create">Create a new post</a>
 <% } %>
 
 <h2>Messages</h2>
 <% if (typeof posts !== 'undefined') { %>
     <ul>
-        <% if (typeof currentUser !== "undefined") { %>
+        <% if (loggedIn) { %>
             <% posts.forEach(post => { %>
                 <li>
                     <b><%= post.title %></b>
                     <p><%= post.body %></p>
                     <p>by <%= post.user.first_name %> at <%= post.createdAt %></p>
+                    <% if (isAdmin) { %>
+                        <button><a href="users/<%= post.user.id %>/posts/<%= post.id %>/delete">Delete</a></button>
+                    <% } %>
                 </li>
         <% })} else { %>
             <% posts.forEach(post => { %>
-                <li><p>Post by <%= post.user.first_name %> at <%= post.createdAt %></p></li>
-            <% })} %>    
+                <li>
+                    <b><%= post.title %></b>
+                    <p><%= post.body %></p>
+                </li>
+            <% }) %>
+        <% } %>    
     </ul>
 <% } %>
+<%- include("./layout/footer") %>

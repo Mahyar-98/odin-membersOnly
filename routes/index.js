@@ -1,21 +1,11 @@
 const express = require("express");
 const router = express.Router();
-const asyncHandler = require("express-async-handler");
-const user_controller = require("../controllers/userController");
-const Post = require("../models/post");
+const post_controller = require("../controllers/postController");
 
-router.get(
-  "/",
-  asyncHandler(async (req, res, next) => {
-    const posts = await Post.find().populate("user").exec();
-    console.log(posts);
-    res.render("homepage", {
-      title: "Homepage",
-      messages: req.flash(),
-      posts: posts,
-    });
-  }),
-);
+router.get("/", post_controller.posts_get);
+router.get("/about", (req, res, next) => {
+  res.render("about", { title: "About" });
+});
 router.get("/signup", (req, res, next) => {
   res.redirect("/users/create");
 });

@@ -1,8 +1,8 @@
 <%- include("./layout/header") %>
-<% if (typeof currentUser === 'undefined') { %>
+<h1>Join the member club!</h1>
+<% if (!loggedIn) { %>
   <p>You should log in first!</p>
 <% } else { %>
-  <h1><%= title %></h1>
   <p>Please provide the secret code to become an admin!</p>
   <form action="" method="post">
     <label for="secret">Admin secret code: 

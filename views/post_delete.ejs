@@ -1,0 +1,10 @@
+<%- include("./layout/header") %>
+<strong>Are you sure you want to delete the following post?</strong>
+<b><%= post.title %></b>
+<p><%= post.body %></p>
+<p>by <%= post.user.first_name %> at <%= post.createdAt %></p>
+<form action="" method="post">
+    <button type="submit">Confirm</button>
+    <button type="button"><a href="/">Cancel</a></button>
+</form>
+<%- include("./layout/footer") %>

@@ -132,7 +132,7 @@ exports.admin_create_get = (req, res, next) => {
 };
 
 exports.admin_create_post = asyncHandler(async (req, res, next) => {
-  const user = await User.findOne({ _id: res.locals.currentUser });
+  const user = await User.findOne({ _id: res.locals.currentUser._id });
   if (!user) {
     res.redirect("/login");
   }

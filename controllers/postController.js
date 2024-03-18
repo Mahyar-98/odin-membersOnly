@@ -3,22 +3,31 @@ const { validationResult, checkSchema } = require("express-validator");
 const User = require("../models/user");
 const Post = require("../models/post");
 
-const userLoggedIn = (req, res, next) => {
-  if (typeof res.locals.currentUser === "undefined") {
+const isLoggedIn = (req, res, next) => {
+  if (!res.locals.loggedIn) {
     res.redirect("/login");
   }
   next();
 };
 
+exports.posts_get = asyncHandler(async (req, res, next) => {
+  const posts = await Post.find().populate("user").exec();
+  res.render("homepage", {
+    title: "Homepage",
+    messages: req.flash(),
+    posts: posts,
+  });
+})
+
 exports.post_create_get = [
-  userLoggedIn,
-  (req, res, next) => {
-    res.render("post_form", { title: "New Post" });
-  },
+    isLoggedIn,
+    (req, res, next) => {
+        res.render("post_form", { title: "New Post" });
+    },
 ];
 
 exports.post_create_post = [
-  userLoggedIn,
+  isLoggedIn,
   checkSchema(
     {
       title: {
@@ -56,3 +65,13 @@ exports.post_create_post = [
     res.redirect("/");
   }),
 ];
+
+exports.post_delete_get = asyncHandler(async(req, res, next) => {
+  const post = await Post.findOne({ _id: req.params.postId }).populate("user").exec();
+  res.render("post_delete", { title: "Delete Post", post: post })
+})
+
+exports.post_delete_post = asyncHandler(async(req, res, next) => {
+  await Post.findByIdAndDelete(req.params.postId)
+  res.redirect("/")
+})
