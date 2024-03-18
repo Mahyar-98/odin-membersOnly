@@ -99,21 +99,30 @@ exports.user_login_post = passport.authenticate("local", {
   failureFlash: true,
 });
 
+exports.user_logout_get = (req, res, next) => {
+  req.logout((err) => {
+    if (err) {
+      return next(err);
+    }
+    res.redirect("/");
+  });
+};
+
 exports.member_create_get = (req, res, next) => {
   res.render("member", { title: "Join The Club" });
 };
 
-exports.member_create_post = asyncHandler(async(req, res, next) => {
-  if (typeof res.locals.currentUser === 'undefined') {
-    res.redirect("/login")
+exports.member_create_post = asyncHandler(async (req, res, next) => {
+  if (typeof res.locals.currentUser === "undefined") {
+    res.redirect("/login");
   }
-  const user = await User.findOne({_id: res.locals.currentUser._id});
+  const user = await User.findOne({ _id: res.locals.currentUser._id });
   if (!user) {
-    res.redirect("/login")
+    res.redirect("/login");
   }
   if (req.body.secret === process.env.MEMBER_CODE) {
     user.membership_status = "member";
-    await user.save()
-    res.redirect("/")
+    await user.save();
+    res.redirect("/");
   }
 });
