@@ -1,14 +1,10 @@
 const asyncHandler = require("express-async-handler");
 const { validationResult, checkSchema } = require("express-validator");
-const User = require("../models/user");
 const Post = require("../models/post");
+const cookieParser = require("cookie-parser");
 
-const isLoggedIn = (req, res, next) => {
-  if (!res.locals.loggedIn) {
-    res.redirect("/login");
-  }
-  next();
-};
+// Require the custom middleware
+const isLoggedIn = require("../middleware/isLoggedIn");
 
 exports.posts_get = asyncHandler(async (req, res, next) => {
   const posts = await Post.find().populate("user").exec();
@@ -17,13 +13,13 @@ exports.posts_get = asyncHandler(async (req, res, next) => {
     messages: req.flash(),
     posts: posts,
   });
-})
+});
 
 exports.post_create_get = [
-    isLoggedIn,
-    (req, res, next) => {
-        res.render("post_form", { title: "New Post" });
-    },
+  isLoggedIn,
+  (req, res, next) => {
+    res.render("post_form", { title: "New Post" });
+  },
 ];
 
 exports.post_create_post = [
@@ -62,16 +58,26 @@ exports.post_create_post = [
       });
     }
     await post.save();
+    req.flash("success", "Post was created successfully!");
     res.redirect("/");
   }),
 ];
 
-exports.post_delete_get = asyncHandler(async(req, res, next) => {
-  const post = await Post.findOne({ _id: req.params.postId }).populate("user").exec();
-  res.render("post_delete", { title: "Delete Post", post: post })
-})
+exports.post_delete_get = [
+  isLoggedIn,
+  asyncHandler(async (req, res, next) => {
+    const post = await Post.findOne({ _id: req.params.postId })
+      .populate("user")
+      .exec();
+    res.render("post_delete", { title: "Delete Post", post: post });
+  }),
+];
 
-exports.post_delete_post = asyncHandler(async(req, res, next) => {
-  await Post.findByIdAndDelete(req.params.postId)
-  res.redirect("/")
-})
+exports.post_delete_post = [
+  isLoggedIn,
+  asyncHandler(async (req, res, next) => {
+    await Post.findByIdAndDelete(req.params.postId);
+    req.flash("success", "Post was deleted successfully!");
+    res.redirect("/");
+  }),
+];
