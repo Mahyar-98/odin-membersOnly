@@ -8,6 +8,9 @@ const bcrypt = require("bcryptjs");
 const flash = require("connect-flash");
 const cookieParser = require("cookie-parser");
 const morgan = require("morgan");
+const compression = require("compression");
+const helmet = require("helmet");
+const { rateLimit } = require("express-rate-limit");
 const path = require("path");
 require("dotenv").config();
 
@@ -100,6 +103,27 @@ app.use(flash());
 
 // Use morgan as HTTP logger to show the HTTP method and route of each request
 app.use(morgan("dev"));
+
+// Use compression to compress HTTP responses in production
+app.use(compression());
+
+// Use helmet to protect the app from well-known web vulnerabilities
+app.use(
+  helmet.contentSecurityPolicy({
+    useDefaults: true,
+    directives: {
+      defaultSrc: ["'self'", "ka-f.fontawesome.com"],
+      scriptSrc: ["'self'", "kit.fontawesome.com"],
+    },
+  }),
+);
+
+// User the rate limiter middleware
+const limiter = rateLimit({
+  windowMs: 1000 * 60, // 1 minute
+  max: 20, // maximum number of requests in the mentioned timeframe
+});
+app.use(limiter);
 
 // Add local variables to make them available in views
 app.use((req, res, next) => {

@@ -5,12 +5,10 @@ module.exports = checkSchema(
     first_name: {
       trim: true,
       notEmpty: { errorMessage: "First name is required." },
-      escape: true,
     },
     last_name: {
       trim: true,
       notEmpty: { errorMessage: "Last name is required." },
-      escape: true,
     },
     email: {
       trim: true,
@@ -25,7 +23,6 @@ module.exports = checkSchema(
           return true;
         },
       },
-      escape: true,
     },
     password: {
       trim: true,
@@ -34,7 +31,6 @@ module.exports = checkSchema(
         options: { min: 6 },
         errorMessage: "Password should have a minimum of 6 characters.",
       },
-      escape: true,
     },
     password_confirm: {
       trim: true,
