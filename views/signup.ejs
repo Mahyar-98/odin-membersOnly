@@ -1,28 +1,35 @@
 <%- include('./layout/header') %>
-<h1>Sign Up!</h1>
-<form action="" method="post">
-  <label for="first_name">First Name:
-    <input type="text" name="first_name" value=<%= 'undefined'===typeof user ? "" : user.first_name %>>
-  </label>
-  <label for="last_name">Last Name: 
-    <input type="text" name="last_name" value=<%= 'undefined'===typeof user ? "" : user.last_name %>>
-  </label>
-  <label for="email">Email Address: 
-    <input type="email" name="email" value=<%= 'undefined'===typeof user ? "" : user.email %>>
-  </label>
-  <label for="password">Password: 
-    <input type="password" name="password">
-  </label>
-  <label for="password_confirm">Confirm Password: 
-    <input type="password" name="password_confirm">
-  </label>
-  <button>Sign Up</button>
-</form>
-<% if (typeof errors !== 'undefined') { %>
-<ul>
-  <% errors.forEach((error) => { %>
-    <li><%= error.msg %></li>
-  <% }) %>
-</ul>
-<% } %>
+<section class="container">
+  <h1>Sign Up</h1>
+  <form action="" method="post">
+    <div class="input-field">
+      <label for="first_name">First Name: </label>
+      <input type="text" name="first_name" value=<%= 'undefined'===typeof user ? "" : user.first_name %>>
+    </div>
+    <div class="input-field">
+      <label for="last_name">Last Name: </label>
+      <input type="text" name="last_name" value=<%= 'undefined'===typeof user ? "" : user.last_name %>>
+    </div>
+    <div class="input-field">
+      <label for="email">Email Address: </label>
+      <input type="email" name="email" value=<%= 'undefined'===typeof user ? "" : user.email %>>
+    </div>
+    <div class="input-field">
+      <label for="password">Password: </label>
+      <input type="password" name="password">
+    </div>
+    <div class="input-field">
+      <label for="password_confirm">Confirm Password: </label>
+      <input type="password" name="password_confirm">
+    </div>
+    <button>Sign Up</button>
+  </form>
+  <% if (typeof errors !== 'undefined') { %>
+  <ul>
+    <% errors.forEach((error) => { %>
+      <li><%= error.msg %></li>
+    <% }) %>
+  </ul>
+  <% } %>
+</section>
 <%- include('./layout/footer') %>

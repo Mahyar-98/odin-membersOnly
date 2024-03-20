@@ -4,20 +4,27 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Members Only | <%= title %></title>
+  <link rel="stylesheet" href="/stylesheets/style.css">
+  <script src="https://kit.fontawesome.com/0391af2bfc.js" crossorigin="anonymous"></script>
 </head>
 <body>
   <header>
-    <nav>
+    <nav class="container">
       <ul>
-        <a href="/">Home</a>
-        <a href="/about">About</a>
+        <li><a href="/">Home</a></li>
+        <li><a href="/about">About</a></li>
       </ul>
       <ul>
         <% if (loggedIn) { %>
-          <a href="/logout">Log out</a>
+          <li><a href="/logout">Log out</a></li>
+          <% if (isUser) { %>
+            <li><a href="/member">Become Member</a></li>
+          <% } else if (isMember) { %>
+            <li><a href="/admin">Become Admin</a></li>
+          <% } %>
         <% } else { %>
-          <a href="/login">Log in</a>
-          <a href="/signup">Sign up</a>
+          <li><a href="/login">Log in</a></li>
+          <li><a href="/signup">Sign up</a></li>
         <% } %>
       </ul>
     </nav>

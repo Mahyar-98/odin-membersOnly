@@ -14,6 +14,8 @@ router.get("/admin", user_controller.admin_create_get);
 router.post("/admin", user_controller.admin_create_post);
 router.get("/:id/posts/create", post_controller.post_create_get);
 router.post("/:id/posts/create", post_controller.post_create_post);
+router.get("/:id/posts/:postId/edit", post_controller.post_edit_get);
+router.post("/:id/posts/:postId/edit", post_controller.post_edit_post);
 router.get("/:id/posts/:postId/delete", post_controller.post_delete_get);
 router.post("/:id/posts/:postId/delete", post_controller.post_delete_post);
 

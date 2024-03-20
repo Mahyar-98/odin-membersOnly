@@ -1,24 +1,28 @@
 <%- include('./layout/header') %>
-<h1><%= title %></h1>
 <% if (messages.error) { %>
   <div class="alert alert-danger" role="alert">
     <%= messages.error %>
   </div>
 <% } %>
-<form action="" method="post">
-  <label for="email">Email Address: 
-    <input type="email" name="email">
-  </label>
-  <label for="password">Password: 
-    <input type="password" name="password">
-  </label>
-  <button>Log in</button>
-</form>
-<% if (typeof errors !== 'undefined') { %>
-<ul>
-  <% errors.forEach((error) => { %>
-    <li><%= error.msg %></li>
-  <% }) %>
-</ul>
-<% } %>
+<section class="container">
+  <h1><%= title %></h1>
+  <form action="" method="post">
+    <div class="input-field">
+      <label for="email">Email Address: </label>
+      <input type="email" name="email">
+    </div>
+    <div class="input-field">
+      <label for="password">Password: </label>
+      <input type="password" name="password">
+    </div>
+    <button>Login</button>
+  </form>
+  <% if (typeof errors !== 'undefined') { %>
+  <ul>
+    <% errors.forEach((error) => { %>
+      <li><%= error.msg %></li>
+    <% }) %>
+  </ul>
+  <% } %>
+</section>
 <%- include('./layout/footer') %>

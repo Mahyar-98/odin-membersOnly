@@ -28,6 +28,9 @@ mongoose.connect(process.env.MONGODB_URL).catch((err) => console.error(err));
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
+// Serve static assests
+app.use(express.static(path.join(__dirname, "/public")));
+
 // Use the body parser middleware to be able to parse the body of HTTP POST requests
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
@@ -63,11 +66,15 @@ passport.use(
       try {
         const user = await User.findOne({ email });
         if (!user) {
-          return done(null, false, { message: "Incorrect email address" });
+          return done(null, false, {
+            message: "Email address is not valid. Please sign up!",
+          });
         }
         const match = await bcrypt.compare(password, user.password);
         if (!match) {
-          return done(null, false, { message: "Incorrect password" });
+          return done(null, false, {
+            message: "Password is incorrect. Please try again!",
+          });
         }
         return done(null, user);
       } catch (error) {
@@ -94,10 +101,14 @@ app.use(flash());
 // Use morgan as HTTP logger to show the HTTP method and route of each request
 app.use(morgan("dev"));
 
-// Add currentUser to local variables available in views
+// Add local variables to make them available in views
 app.use((req, res, next) => {
   res.locals.currentUser = req.user;
   res.locals.loggedIn = typeof req.user !== "undefined";
+  res.locals.isUser = req.user ? req.user.membership_status === "user" : null;
+  res.locals.isMember = req.user
+    ? req.user.membership_status === "member"
+    : null;
   res.locals.isAdmin = req.user ? req.user.membership_status === "admin" : null;
   next();
 });

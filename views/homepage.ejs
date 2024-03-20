@@ -4,33 +4,43 @@
       <%= messages.success %>
     </div>
 <% } %>
-<h1><%= title %></h1>
-<% if (loggedIn) { %>
-    <p>Welcome, <%= currentUser.first_name %>!</p>
-    <a href="/users/<%= currentUser.id %>/posts/create">Create a new post</a>
-<% } %>
+<section class="container home">
+    <% if (loggedIn) { %>
+        <b>Welcome, <%= currentUser.first_name %>!</b>
+        <button><a href="/users/<%= currentUser.id %>/posts/create">Create a new post</a></button>
+    <% } %>
+</section>
 
-<h2>Messages</h2>
-<% if (typeof posts !== 'undefined') { %>
-    <ul>
-        <% if (loggedIn) { %>
-            <% posts.forEach(post => { %>
-                <li>
-                    <b><%= post.title %></b>
-                    <p><%= post.body %></p>
-                    <p>by <%= post.user.first_name %> at <%= post.createdAt %></p>
-                    <% if (isAdmin) { %>
-                        <button><a href="users/<%= post.user.id %>/posts/<%= post.id %>/delete">Delete</a></button>
-                    <% } %>
-                </li>
-        <% })} else { %>
-            <% posts.forEach(post => { %>
-                <li>
-                    <b><%= post.title %></b>
-                    <p><%= post.body %></p>
-                </li>
-            <% }) %>
-        <% } %>    
-    </ul>
-<% } %>
+<section class="container">
+    <h2>Posts</h2>
+    <% if (posts.length > 0) { %>
+        <ul class="posts">
+            <% if (loggedIn) { %>
+                <% posts.forEach(post => { %>
+                    <li class="post">
+                        <b><%= post.title %></b>
+                        <p><%= post.body %></p>
+                        <div class="post-details">
+                            <small>(by <%= post.user.first_name %> on <%= post.createdAtFormatted %>)</small>
+                            <% if (isAdmin || currentUser.id === post.user.id) { %>
+                                <div class="btns-post">
+                                    <button><a href="users/<%= post.user.id %>/posts/<%= post.id %>/edit">Edit</a></button>
+                                    <button><a href="users/<%= post.user.id %>/posts/<%= post.id %>/delete">Delete</a></button>
+                                </div>
+                            <% } %>
+                        </div>
+                    </li>
+            <% })} else { %>
+                <% posts.forEach(post => { %>
+                    <li class="post">
+                        <b><%= post.title %></b>
+                        <p><%= post.body %></p>
+                    </li>
+                <% }) %>
+            <% } %>    
+        </ul>
+    <% } else { %>
+        <p>There are no posts yet!</p>
+    <% } %>
+</section>
 <%- include("./layout/footer") %>

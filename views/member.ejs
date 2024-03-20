@@ -1,21 +1,23 @@
 <%- include("./layout/header") %>
-<% if (typeof currentUser === 'undefined') { %>
-  <p>You should log in first!</p>
-<% } else { %>
-  <h1><%= title %></h1>
-  <p>Please provide the secret code to join our club!</p>
-  <form action="" method="post">
-    <label for="secret">Club's Secret code: 
-      <input type="text" name="secret">
-    </label>
-    <button>Join the club</button>
-  </form>
-  <% if (typeof errors !== 'undefined') { %>
-  <ul>
-    <% errors.forEach(error => { %>
-    <li><%= error.msg %></li>
-    <% }) %>
-  </ul>
+<section class="container">
+  <% if (typeof currentUser === 'undefined') { %>
+    <p>You should log in first!</p>
+  <% } else { %>
+    <h1><%= title %></h1>
+    <p>Please provide the secret code to join our club!</p>
+    <form action="" method="post">
+      <label for="secret">Club's Secret code: 
+        <input type="text" name="secret">
+      </label>
+      <button>Join the club</button>
+    </form>
+    <% if (typeof errors !== 'undefined') { %>
+    <ul>
+      <% errors.forEach(error => { %>
+      <li><%= error.msg %></li>
+      <% }) %>
+    </ul>
+    <% } %>
   <% } %>
-<% } %>
+</section>
 <%- include("./layout/footer") %>

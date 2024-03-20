@@ -1,10 +1,16 @@
 <%- include("./layout/header") %>
-<strong>Are you sure you want to delete the following post?</strong>
-<b><%= post.title %></b>
-<p><%= post.body %></p>
-<p>by <%= post.user.first_name %> at <%= post.createdAt %></p>
-<form action="" method="post">
-    <button type="submit">Confirm</button>
-    <button type="button"><a href="/">Cancel</a></button>
-</form>
+<section class="container">
+    <strong>Are you sure you want to delete the following post?</strong>
+    <div class="post">
+        <b><%= post.title %></b>
+        <p><%= post.body %></p>
+        <small>by <%= post.user.first_name %> at <%= post.createdAtFormatted %></small>
+    </div>
+    <form action="" method="post">
+        <div class="btns-delete">
+            <button type="submit">Confirm</button>
+            <button type="button"><a href="/">Cancel</a></button>
+        </div>
+    </form>
+</section>
 <%- include("./layout/footer") %>

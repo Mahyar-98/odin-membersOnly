@@ -1,19 +1,23 @@
 <%- include("./layout/header") %>
-<h1><%= title %></h1>
-<form action="" method="post">
-    <label for="title">Subject: 
-        <input type="text" name="title" value=<%= typeof post === 'undefined' ? "" : post.title %>>
-    </label>
-    <label for="body">Content: 
-        <textarea name="body" cols="30" rows="10" value=<%= typeof post === 'undefined' ? "" : post.body %>></textarea>
-    </label>
-    <button>Create post</button>
-</form>
-<% if (typeof errors !== 'undefined') { %>
-    <ul>
-      <% errors.forEach((error) => { %>
-        <li><%= error.msg %></li>
-      <% }) %>
-    </ul>
-    <% } %>
+<section class="container">
+  <h1><%= title %></h1>
+  <form action="" method="post">
+    <div class="input-field">
+      <label for="title">Subject: </label>
+      <input type="text" name="title" value="<%= typeof post === 'undefined' ? "" : post.title %>">
+    </div>
+    <div class="input-field">
+      <label for="body">Content: </label>
+      <textarea name="body" cols="30" rows="10"><%= typeof post === 'undefined' ? "" : post.body %></textarea>
+    </div>
+      <button><%= btn %></button>
+  </form>
+  <% if (typeof errors !== 'undefined') { %>
+      <ul>
+        <% errors.forEach((error) => { %>
+          <li><%= error.msg %></li>
+        <% }) %>
+      </ul>
+  <% } %>
+</section>
 <%- include("./layout/footer") %>
